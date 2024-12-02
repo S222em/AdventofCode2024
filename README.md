@@ -7,7 +7,7 @@ My solutions for [AdventofCode2024](https://adventofcode.com/2024) written in Py
 You will have to provide your own puzzle.txt
 
 ```shell
-cd day1
+cd day1_a
 open puzzle.txt
 python3 main.py
 ```
