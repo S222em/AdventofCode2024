@@ -27,7 +27,7 @@ def is_following_rules(a: int, b: int, ascending: bool) -> bool:
 # Unfortunately this is not true, take case: [40, 41, 39, 37]
 # Here the rule will not be followed at i = 2, (41 and 39)
 # But as we can see the report can be valid if i = 0 is removed
-# Therefor the "bad" level does not have to be i and i - 1, but any j for j <= i
+# Therefor the "bad" level does not have to be i or i - 1, but any j for j <= i
 
 def is_report_safe(report: list[int], tolerate=True) -> bool:
     """
@@ -53,8 +53,7 @@ def is_report_safe(report: list[int], tolerate=True) -> bool:
 
         # Try to remove levels in the report where j <= i and see if any is safe
         for j in range(i + 1):
-            result = is_report_safe(report[:j] + report[j + 1:], tolerate=False)
-            if result:
+            if is_report_safe(report[:j] + report[j + 1:], tolerate=False):
                 return True
 
         return False
