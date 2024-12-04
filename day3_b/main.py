@@ -20,7 +20,7 @@ MUL_PATTERN = re.compile(r"mul\((\d+),(\d+)\)")
 def do_instructions(memory):
     """
     Finds valid mul instructions and executes them if enabled.
-    Returns the sum of all executed instructions.
+    Returns the sum of all executed mul instructions.
     :param memory:
     :return:
     """
