@@ -1,4 +1,4 @@
-# AdventofCode2023
+# AdventofCode2024
 
 My solutions for [AdventofCode2024](https://adventofcode.com/2024) written in Python.
 
