@@ -1,7 +1,7 @@
 from collections import Counter
 
 
-# As we need much more iterations of blink in part 2, it's no longer runs in acceptable time
+# As we need much more iterations of blink in part 2, it no longer runs in acceptable time.
 # Therefor, instead of "blinking" every stone, we rather create a dictionary with as key the number on the stone
 # and as a value the amount of times we have that specific stone.
 # This way we can reduce the amount of iterations significantly as we "blink" all stones with the same number at once.
