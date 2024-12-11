@@ -5,6 +5,10 @@ from collections import Counter
 # Therefor, instead of "blinking" every stone, we rather create a dictionary with as key the number on the stone
 # and as a value the amount of times we have that specific stone.
 # This way we can reduce the amount of iterations significantly as we "blink" all stones with the same number at once.
+# Amount of total stone iterations with 25 blinks:
+# - Part 1: 376683
+# - Part 2: 3542
+# So as listed above the method used in part 2 has fewer iterations as part 1 and is a lot faster.
 
 def get_stones():
     """
