@@ -2,7 +2,6 @@ import re
 
 BUTTON_A_TOKENS = 3
 BUTTON_B_TOKENS = 1
-MAX_BUTTON_PRESSES = 100000
 
 BUTTON_PATTERN = re.compile(r"Button [AB]: X\+(\d+), Y\+(\d+)")
 PRIZE_PATTERN = re.compile(r"Prize: X=(\d+), Y=(\d+)")
