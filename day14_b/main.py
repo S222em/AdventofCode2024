@@ -1,8 +1,6 @@
 import re
 
 EXTRACT_PATTERN = re.compile(r"p=(.+),(.+) v=(.+),(.+)")
-PICTURE_AMOUNT = 10000
-PICTURE_INTERVAL = 0.5
 WIDTH = 101
 HEIGHT = 103
 
