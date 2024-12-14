@@ -46,20 +46,8 @@ def move_robot(position, speed):
     :param speed:
     :return:
     """
-    x = position[0] + speed[0]
-    y = position[1] + speed[1]
-
-    if x < 0:
-        x += WIDTH
-
-    if x >= WIDTH:
-        x -= WIDTH
-
-    if y < 0:
-        y += HEIGHT
-
-    if y >= HEIGHT:
-        y -= HEIGHT
+    x = (position[0] + speed[0]) % WIDTH
+    y = (position[1] + speed[1]) % HEIGHT
 
     return x, y
 
