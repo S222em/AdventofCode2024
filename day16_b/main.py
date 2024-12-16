@@ -130,16 +130,6 @@ def find_unique_tiles_in_best_paths(maze):
 
             # If we made a 90-degree turn it adds 1000 points, +1 for the step
             new_score = score + (1 if direction == (dx, dy) else 1001)
-            new_tiles = tiles | {(x, y)}
-
-            # This is not one of the best paths
-            if new_score > lowest_score:
-                continue
-
-            # We found the end.
-            if (x, y) == end:
-                unique_tiles.update(new_tiles)
-                continue
 
             # Check if we already visited this tile from this direction before
             if (x, y, dx, dy) in visited:
@@ -148,6 +138,17 @@ def find_unique_tiles_in_best_paths(maze):
                 # If it's the same or lower we should continue.
                 if new_score > previous_score:
                     continue
+
+            # This is not one of the best paths
+            if new_score > lowest_score:
+                continue
+
+            new_tiles = tiles | {(x, y)}
+
+            # We found the end.
+            if (x, y) == end:
+                unique_tiles.update(new_tiles)
+                continue
 
             # Add this to our visited
             visited[(x, y, dx, dy)] = new_score
