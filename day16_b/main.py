@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def get_maze():
     """
     Returns the maze
@@ -102,7 +105,7 @@ def find_unique_tiles_in_best_paths(maze):
     start = find_start(maze)
     end = find_end(maze)
 
-    queue = [(start, (0, 1), 0, {start})]
+    queue = deque(((start, (0, 1), 0, {start}),))
     visited = dict()
 
     # Find the lowest score first
@@ -112,11 +115,7 @@ def find_unique_tiles_in_best_paths(maze):
     unique_tiles = {start}
 
     while queue:
-        # Get the lowest score so far from the queue
-        item = min(queue, key=lambda item: item[2])
-        # Remove the item from the queue
-        queue.remove(item)
-        position, direction, score, tiles = item
+        position, direction, score, tiles = queue.popleft()
 
         # Can't move backwards, so this little formula makes sure we can only move left, straight or right
         for dx, dy in (direction, (-direction[1], direction[0]), (direction[1], -direction[0])):
