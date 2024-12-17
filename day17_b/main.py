@@ -122,7 +122,6 @@ class Program:
         :return:
         """
         self.output.append(self.get_combo(operand) % 8)
-        print(self.registers, self.output)
 
     def bdv(self, operand):
         """
@@ -205,6 +204,12 @@ class Program:
                 break
 
 
+# Register A: 117440
+# Register B: 0
+# Register C: 0
+#
+# Program: 0,3,5,4,3,0
+#
 # [117440, 0, 0] []
 # [14680, 0, 0] [0]
 # [1835, 0, 0] [0, 3]
@@ -212,6 +217,7 @@ class Program:
 # [28, 0, 0] [0, 3, 5, 4]
 # [3, 0, 0] [0, 3, 5, 4, 3]
 # [0, 0, 0] [0, 3, 5, 4, 3, 0]
+#
 # The image above depicts the state of the program when a new item is added to the output
 # As visible, each time the program adds an item to the output, the output after that is register A // 8
 # This means that, in order to reach (in this case) 6 outputs, we need to number to be divisible by 8.
