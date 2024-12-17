@@ -31,10 +31,11 @@ class Program:
         # A: 0
         # B: 1
         # C: 2
-        self.registers = registers
         self.instructions = instructions
-        self.pointer = 0
-        self.output = list()
+        self.registers = None
+        self.pointer = None
+        self.output = None
+        self.reset(registers)
 
     def get_literal(self, operand):
         """
@@ -203,6 +204,11 @@ class Program:
             if halt:
                 break
 
+    def reset(self, registers):
+        self.registers = registers
+        self.pointer = 0
+        self.output = list()
+
 
 # Register A: 117440
 # Register B: 0
@@ -223,18 +229,15 @@ class Program:
 # This means that, in order to reach (in this case) 6 outputs, we need to number to be divisible by 8.
 # As there is a jump statement (3 0) at the end, we will keep repeating until register A is 0.
 # This also means that if we start backwards, we will start with a=0, as A should be 0 at the end.
-# Another observation is that register B and C will remain 0, which is important for this solution to work.
 # So now we know that between each output the value in register A decreases by 8, we can use this to find the answer.
 # As we start at a=0 and at the last instruction, the output of the program will be [0], as A is 0 and can not be divided by 8 anymore,
 # the program will stop. Now for the next output we want, 3, we need to make sure the program does not end at this step,
 # which means that A != 0, and as it's one output from the end, A // 8 == 0, which means that any A lower than 8
 # and with output [3, 0] will work, to do this, simply keep incrementing A by 1 until the wanted output is found.
 # Then for the next output, [4, 3, 0] we want an A where A // 8**2 == 0, so to get the minimum where this will be true,
-# we multiply the value in register A b *8, and this will be the lowest number that would keep A // 8**2 == 0 true,
+# we multiply the value in register A by *8, and this will be the lowest number that would keep A // 8**2 == 0 true,
 # now again we can find the specific value A by incrementing it by 1 until we find output [4, 3, 0].
 # Just continue doing this until the whole output is matched, the resulting value in register A is the answer.
-# Now, the only thing that makes this work is that both the example and actual puzzle share the jump statement at the end,
-# the fact that at each output A = A // 8, and that the output is always A % 8.
 
 
 def find_register_a_value(registers, instructions):
@@ -246,37 +249,20 @@ def find_register_a_value(registers, instructions):
     """
     program = Program(registers, instructions)
 
-    # At the end of the program there is a jump
-    # This means that to end the program, a needs to be 0 at the end
-    # As we work back from the end to the start a will start at 0
     a = 0
     i = 1
 
     while True:
-        # Reset the program to it's initial state
-        program.registers = [a, registers[1], registers[2]]
-        program.pointer = 0
-        program.output = list()
+        program.reset([a, registers[1], registers[2]])
 
         program.run()
 
-        # If the output is not long enough increment a by 1
-        if len(program.output) < i:
-            a += 1
-            continue
-
-        # The end of the output matches the end of the instructions
-        # This means that we found a valid a for this stage of the program
         if program.output[-i:] == instructions[-i:]:
             i += 1
-
-            # If i has gone out of bounds, we have verified the output is a copy of itself
-            # Which means we can return a, this answer
             if i > len(instructions):
                 return a
 
             a *= 8
-
             continue
 
         a += 1
