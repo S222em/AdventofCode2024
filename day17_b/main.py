@@ -214,7 +214,8 @@ class Program:
 # Register B: 0
 # Register C: 0
 #
-# Program: 0,3,5,4,3,0
+# Program: 0,3,        5,4,   3,0
+#         (DIV A BY 8, OUT A, JUMP 0 IF A != 0)
 #
 # [117440, 0, 0] []
 # [14680, 0, 0] [0]
@@ -228,17 +229,8 @@ class Program:
 # As visible, each time the program adds an item to the output, the output after that is register A // 8
 # This means that, in order to reach (in this case) 6 outputs, we need to number to be divisible by 8.
 # As there is a jump statement (3 0) at the end, we will keep repeating until register A is 0.
-# This also means that if we start backwards, we will start with a=0, as A should be 0 at the end.
-# So now we know that between each output the value in register A decreases by 8, we can use this to find the answer.
-# As we start at a=0 and at the last instruction, the output of the program will be [0], as A is 0 and can not be divided by 8 anymore,
-# the program will stop. Now for the next output we want, 3, we need to make sure the program does not end at this step,
-# which means that A != 0, and as it's one output from the end, A // 8 == 0, which means that any A lower than 8
-# and with output [3, 0] will work, to do this, simply keep incrementing A by 1 until the wanted output is found.
-# Then for the next output, [4, 3, 0] we want an A where A // 8**2 == 0, so to get the minimum where this will be true,
-# we multiply the value in register A by *8, and this will be the lowest number that would keep A // 8**2 == 0 true,
-# now again we can find the specific value A by incrementing it by 1 until we find output [4, 3, 0].
-# Just continue doing this until the whole output is matched, the resulting value in register A is the answer.
-
+# This also means that if we start backwards, we will start with a=0.
+# So now we know that between each output the value in register A is divided by 8, we can use this to find the answer.
 
 def find_register_a_value(registers, instructions):
     """
