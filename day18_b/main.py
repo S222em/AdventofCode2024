@@ -42,6 +42,9 @@ def find_shortest_path(start, end, corrupted):
     """
     visited = corrupted.copy()
 
+    if start in visited or end in visited:
+        return None
+
     queue = deque(((start, set()),))
 
     while queue:
