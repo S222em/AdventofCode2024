@@ -88,13 +88,12 @@ def find_amount_of_cheats(path, min_time):
             (bp, bt) = b
 
             # Check if the 2 points are less than or equal to 20 picoseconds away from each-other
-            dx = abs(ap[0] - bp[0])
-            dy = abs(ap[1] - bp[1])
-            if dx + dy > 20:
+            distance = abs(ap[0] - bp[0]) + abs(ap[1] - bp[1])
+            if distance > 20:
                 continue
 
             # Calculate the total time gain from using this cheat
-            dt = abs(at - bt) - (dx + dy)
+            dt = abs(at - bt) - distance
             if dt < min_time:
                 continue
 
