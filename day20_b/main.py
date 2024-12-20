@@ -43,7 +43,7 @@ def find_shortest_path(track):
     end = find_char("E", track)
 
     visited = {start}
-    queue = deque(((start, 0, {start: 0}),))
+    queue = deque(((start, 0, [(start[0], start[1], 0)]),))
 
     while queue:
         (x, y), time, path = queue.popleft()
@@ -59,7 +59,7 @@ def find_shortest_path(track):
                 continue
 
             new_time = time + 1
-            new_path = path | {(px, py): new_time}
+            new_path = path + [(px, py, new_time)]
             visited.add((px, py))
 
             if (px, py) == end:
@@ -80,15 +80,10 @@ def find_amount_of_cheats(path, min_time):
     """
     total = 0
 
-    path = list(path.items())
-
-    for i, a in enumerate(path):
-        (ap, at) = a
-        for j, b in enumerate(path[i + 1:]):
-            (bp, bt) = b
-
+    for i, (ax, ay, at) in enumerate(path):
+        for (bx, by, bt) in path[i + 1:]:
             # Check if the 2 points are less than or equal to 20 picoseconds away from each-other
-            distance = abs(ap[0] - bp[0]) + abs(ap[1] - bp[1])
+            distance = abs(ax - bx) + abs(ay - by)
             if distance > 20:
                 continue
 
